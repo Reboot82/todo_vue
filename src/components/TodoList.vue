@@ -1,6 +1,7 @@
 <template>
   <div>
-    <input type="text" class="todo-input" placeholder="What you gotta do?" v-model="newTodo" />
+    <input type="text" class="todo-input" placeholder="What you gotta do?" 
+    v-model="newTodo" @keyup.enter="addTodo" />
     <div v-for="todo in todos" :key="todo.id" class="todo-item">
         {{ todo.title }}
     </div>
@@ -31,6 +32,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+      addTodo() {
+          alert('adding todo')
+      }
   }
 };
 </script>
