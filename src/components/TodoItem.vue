@@ -67,26 +67,23 @@ export default {
     }
   },
   methods: {
-    removeTodo(index) {
-      eventBus.$emit("removedTodo", index);
+    removeTodo(id) {
+      this.$store.state.todos.splice(id, 1);
     },
     editTodo() {
       this.beforeEditCache = this.title;
       this.editing = true;
     },
-    doneEdit() {
+    doneEdit(id) {
       if (this.title.trim() == "") {
         this.title = this.beforeEditCache;
       }
       this.editing = false;
-      eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing
-        }
+      this.$store.state.todos.splice(id, 1, {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
       });
     },
     cancelEdit() {
