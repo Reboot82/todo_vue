@@ -12,7 +12,7 @@
       enter-active-class="animated fadeInUp"
       leave-active-class="animated fadeOutDown"
     >
-      <todo-item v-for="(todo, index) in todosFiltered" :key="todo.id" :todo="todo" :index="index" :checkAll="!anyRemaining" ></todo-item>
+      <todo-item v-for="(todo, index) in todosFiltered" :key="todo.id" :todo="todo" :index="index" :checkAll="!anyRemaining" @removedTodo="removeTodo" @finishedEdit="finishedEdit"></todo-item>
     </transition-group>
 
     <div class="extra-container">
@@ -76,10 +76,13 @@ export default {
       ]
     };
   },
+<<<<<<< HEAD
   created() {
     //   eventBus.$on('removedTodo', (index) => this.removeTodo(index))
       eventBus.$on('finishedEdit', (data) => this.finishedEdit(data))
   },
+=======
+>>>>>>> parent of 62ec68a... created event buses
   computed: {
     remaining() {
       return this.$store.getters.remaining

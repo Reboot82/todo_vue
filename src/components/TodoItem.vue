@@ -67,8 +67,13 @@ export default {
     }
   },
   methods: {
+<<<<<<< HEAD
     removeTodo(id) {
       this.$store.state.todos.splice(id, 1);
+=======
+    removeTodo(index) {
+      this.$emit("removedTodo", index);
+>>>>>>> parent of 62ec68a... created event buses
     },
     editTodo() {
       this.beforeEditCache = this.title;
@@ -79,11 +84,22 @@ export default {
         this.title = this.beforeEditCache;
       }
       this.editing = false;
+<<<<<<< HEAD
       this.$store.state.todos.splice(id, 1, {
         id: this.id,
         title: this.title,
         completed: this.completed,
         editing: this.editing
+=======
+      this.$emit("finishedEdit", {
+        index: this.index,
+        todo: {
+          id: this.id,
+          title: this.title,
+          completed: this.completed,
+          editing: this.editing
+        }
+>>>>>>> parent of 62ec68a... created event buses
       });
     },
     cancelEdit() {
