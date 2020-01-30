@@ -15,13 +15,13 @@
         v-model="title"
         @blur="doneEdit"
         @keyup.enter="doneEdit"
-        @keyup.escape="cancelEdit"
+        @keyup.esc="cancelEdit"
         v-focus
       />
     </div>
     <div>
       <button @click="pluralize">Plural</button>
-      <span class="remove-item" @click="removeTodo(index)">&times;</span>
+      <span class="remove-item" @click="removeTodo(todo.id)">&times;</span>
     </div>
   </div>
 </template>
@@ -34,10 +34,6 @@ export default {
   props: {
     todo: {
       type: Object,
-      required: true
-    },
-    index: {
-      type: Number,
       required: true
     },
     checkAll: {
@@ -62,11 +58,7 @@ export default {
   },
   watch: {
     checkAll() {
-      if (this.checkAll) {
-        this.completed = true;
-      } else {
-        this.completed = this.todo.completed;
-      }
+      this.completed = this.checkAll ? true : this.todo.completed;
     }
   },
   directives: {
@@ -77,8 +69,8 @@ export default {
     }
   },
   methods: {
-    removeTodo(index) {
-      eventBus.$emit("removedTodo", index);
+    removeTodo(id) {
+      eventBus.$emit("removedTodo", id);
     },
     editTodo() {
       this.beforeEditCache = this.title;
@@ -90,13 +82,10 @@ export default {
       }
       this.editing = false;
       eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing
-        }
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
       });
     },
     cancelEdit() {
@@ -109,13 +98,10 @@ export default {
     handlePluralize() {
       this.title = this.title + "s";
       eventBus.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
           id: this.id,
           title: this.title,
           completed: this.completed,
           editing: this.editing
-        }
       });
     }
   }
